@@ -2,14 +2,9 @@ package com.github.romankh3.image.comparison;
 
 import com.github.romankh3.image.comparison.exception.ImageComparisonException;
 import com.github.romankh3.image.comparison.exception.ImageNotFoundException;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
-import java.awt.image.WritableRaster;
+
+import java.awt.*;
+import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +30,30 @@ public final class ImageComparisonUtil {
     }
 
     /**
+     * Convert the image file into BMP format
+     * @param filePath the path where contains image.
+     * @return the {@link BufferedImage} object of this specific image after converting.
+     */
+    public static BufferedImage convertBmpFile(String filePath){
+        try {
+            BufferedImage sourceImage = ImageIO.read(new File(filePath));
+            int height = sourceImage.getHeight();
+            int weight = sourceImage.getWidth();
+            int[] pixel = new int[weight*height];
+            PixelGrabber pixelGrabber = new PixelGrabber(sourceImage, 0, 0, weight, height, pixel, 0, weight);
+            pixelGrabber.grabPixels();
+            MemoryImageSource memoryImageSource = new MemoryImageSource(weight, height, pixel, 0, weight);
+            Image image = Toolkit.getDefaultToolkit().createImage(memoryImageSource);
+            BufferedImage bufferedImage = new BufferedImage(weight, height, BufferedImage.TYPE_USHORT_565_RGB);
+            bufferedImage.createGraphics().drawImage(image, 0, 0 ,null);
+            return bufferedImage;
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * Read image from the provided path.
      *
      * @param path the path where contains image.
@@ -45,8 +64,8 @@ public final class ImageComparisonUtil {
         File imageFile = new File(path);
         if (imageFile.exists()) {
             try {
-                return ImageIO.read(imageFile);
-            } catch (IOException e) {
+                return convertBmpFile(path);
+            } catch (Exception e) {
                 throw new ImageComparisonException(String.format("Cannot read image from the file, path=%s", path), e);
             }
         } else {

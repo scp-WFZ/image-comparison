@@ -24,6 +24,20 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Unit-level testing for {@link ImageComparison} object.")
 public class ImageComparisonUnitTest {
 
+    @Test
+    public void testBmpImageFileComparing() {
+        //given
+        File file = new File("build/test-images/result.png");
+
+        //when
+        ImageComparison imageComparison = new ImageComparison("expected#11.png", "actual#11.png");
+        ImageComparisonResult imageComparisonResult = imageComparison.compareImages().writeResultTo(file);
+        //then
+        assertNotNull(imageComparison.getActual());
+        assertNotNull(imageComparison.getExpected());
+        assertEquals(MISMATCH, imageComparisonResult.getImageComparisonState());
+    }
+
     @DisplayName("The most important test. Shown, that the changes in algorithm, "
             + "don't break the main behaviour and result as expected")
     @Test
