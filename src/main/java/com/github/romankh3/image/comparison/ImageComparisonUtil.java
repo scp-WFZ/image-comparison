@@ -30,22 +30,30 @@ public final class ImageComparisonUtil {
     }
 
     /**
-     * Convert the image file into BMP format
+     * Convert the image file into BMP format (for issue #217).
      * @param filePath the path where contains image.
-     * @return the {@link BufferedImage} object of this specific image after converting.
+     * @return BufferedImage object of this specific image after converting.
      */
-    public static BufferedImage convertBmpFile(String filePath){
+    public static BufferedImage convertBmpFile(final String filePath) {
         try {
             BufferedImage sourceImage = ImageIO.read(new File(filePath));
             int height = sourceImage.getHeight();
             int weight = sourceImage.getWidth();
-            int[] pixel = new int[weight*height];
-            PixelGrabber pixelGrabber = new PixelGrabber(sourceImage, 0, 0, weight, height, pixel, 0, weight);
+            int[] pixel = new int[weight * height];
+            PixelGrabber pixelGrabber = new PixelGrabber(
+                    sourceImage, 0, 0,
+                    weight, height,
+                    pixel, 0, weight);
             pixelGrabber.grabPixels();
-            MemoryImageSource memoryImageSource = new MemoryImageSource(weight, height, pixel, 0, weight);
-            Image image = Toolkit.getDefaultToolkit().createImage(memoryImageSource);
-            BufferedImage bufferedImage = new BufferedImage(weight, height, BufferedImage.TYPE_USHORT_565_RGB);
-            bufferedImage.createGraphics().drawImage(image, 0, 0 ,null);
+            MemoryImageSource memoryImageSource =
+                    new MemoryImageSource(weight, height,
+                            pixel, 0, weight);
+            Image image = Toolkit.getDefaultToolkit()
+                    .createImage(memoryImageSource);
+            BufferedImage bufferedImage =
+                    new BufferedImage(weight, height,
+                            BufferedImage.TYPE_USHORT_565_RGB);
+            bufferedImage.createGraphics().drawImage(image, 0, 0, null);
             return bufferedImage;
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
