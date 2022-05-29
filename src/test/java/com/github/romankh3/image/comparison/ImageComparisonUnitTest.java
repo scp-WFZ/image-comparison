@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Unit-level testing for {@link ImageComparison} object.")
 public class ImageComparisonUnitTest {
 
+    //CS304 (manually written) Issue link: https://github.com/romankh3/image-comparison/issues/199
     @DisplayName("For issue#199, test the '-e' and '-a' arguments")
     @Test
     public void testCLI1() throws Exception {
@@ -38,6 +39,7 @@ public class ImageComparisonUnitTest {
         assertEquals(MISMATCH, imageComparisonResult.getImageComparisonState());
     }
 
+    //CS304 (manually written) Issue link: https://github.com/romankh3/image-comparison/issues/199
     @DisplayName("For issue#199, test the '-o' argument")
     @Test
     public void tesCLI2() {

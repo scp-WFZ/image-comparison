@@ -2,10 +2,10 @@ package com.github.romankh3.image.comparison;
 
 import com.github.romankh3.image.comparison.model.*;
 import org.apache.commons.cli.*;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+//CS304 Issue link: https://github.com/romankh3/image-comparison/issues/199
 public class client {
     static String helpMessage = "Usage: java -jar image-comparison-4.4.0.jar [-e] <image_path1> [-a] <image_path2> [-o] <image_path3>\n"+
             "Options:\n" +

@@ -68,6 +68,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- CS304 (manually written) Issue link: https://github.com/romankh3/image-comparison/issues/199 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
